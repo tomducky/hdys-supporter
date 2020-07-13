@@ -3,8 +3,12 @@ package com.carry.www.system;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 /**
  * 类描述：
@@ -14,7 +18,9 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * <p>
  * 修订历史： 日期			修订者		修订描述
  */
-@SpringCloudApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)//如果子依赖用到了数据库，此服务未用到，需要在此去除
+@EnableHystrix
+@EnableDiscoveryClient
 @EnableConfigurationProperties
 @MapperScan(basePackages = { "com.carry.www.system.mapper" })
 public class SystemApplcation implements CommandLineRunner {

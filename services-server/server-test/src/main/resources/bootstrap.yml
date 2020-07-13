@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: nacos-test2
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+  autoconfigure:
+    exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration #排除eureka注册中心
+
