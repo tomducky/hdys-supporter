@@ -1,0 +1,22 @@
+#eureka注册中心地址
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8060/eureka/
+    register-with-eureka: true
+
+server:
+  port: 8889
+    
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native  #本地配置必须有的
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config #本地配置的路径 读取/resources/config下的配置 默认读取文件夹叫config下的资源 客户端调用的配置文件的名字config.name即为config下的文件名的前缀

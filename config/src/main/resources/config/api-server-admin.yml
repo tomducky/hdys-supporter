@@ -1,0 +1,36 @@
+spring:
+#  mail:
+#    host: smtp.qq.com
+#    username: 982694307@qq.com
+#    password: paudschxdxijbcja
+#    properties:
+#      mail.debug: false
+#      mail.smtp.auth: true   #安全认证(默认是true)
+#      mail.smtp.port: 465
+#      mail.smtp.ssl.enable: true  #开启ssl加密 否则项目启动时报530error
+#      mail.smtp.ssl.socketFactory: sf
+#      mail.smtp.starttls.enable: true
+#      mail.smtp.starttls.required: true
+  boot:
+    admin:
+      ui:
+        title: Admin-Server
+#    notify:
+#      mail:
+#        to: 982694307@qq.com  #收件人邮箱
+#        from: 982694307@qq.com  #发件人邮箱
+  security:
+     user:
+       name: "admin"
+       password: "admin"
+#Actuator配置：暴露敏感路径，默认情况下，敏感路径并不暴露
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露xxx端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        include: "*"
+  endpoint:
+    health:
+    # 是否展示健康检查详情
+      show-details: ALWAYS

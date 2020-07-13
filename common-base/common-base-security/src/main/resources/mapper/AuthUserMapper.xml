@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fencer.jdds.core.mapper.AuthMapper">
+
+
+	<select id="selectUserByName" parameterType="map" resultType="com.carry.www.security.entity.SelfUserDetails">
+		select
+		       u.id ,
+		       u.login_name  loginName,
+		       u.real_name   realName,
+			   u.nickname,
+			   u.password,
+				u.dept_id deptId,
+				u.avatar avatar,
+				u.phonenumber,
+				u.e_mail eMail,
+				u.status
+		  from support_shop.hdys_user u
+
+		  <where>
+		  		u.status='0'
+		  	<if test="username !=null and username !=''">
+		  		and u.login_name = #{username}
+		  	</if>
+		  </where>
+		  
+	</select>
+	
+	
+	<!--获取用户菜单列表-->
+	<select id="selectSysMenuByUserId" parameterType="map" resultType="com.carry.www.core.entity.SysMenuEntity">
+	SELECT
+			m.id,
+			m.name,
+			m.permission
+		FROM
+			support_shop.hdys_menu m
+		LEFT JOIN support_shop.hdys_role_permission rm ON m.permission = rm.pid
+		LEFT JOIN support_shop.hdys_permission p ON p.id = rm.pid
+		LEFT JOIN support_shop.hdys_user_role ur ON ur.rid = rm.rid
+		LEFT JOIN support_shop.hdys_role r ON ur.rid = r.id
+
+
+		WHERE
+			ur.uid = #{userId}
+		AND r. STATUS = '0'
+		AND p. STATUS = '0'
+		AND m. STATUS = '0'
+
+		ORDER BY
+			m.sort
+
+	</select>
+
+	<!--获取用户角色列表-->
+	<select id="selectSysRoleByUserId" parameterType="map" resultType="com.carry.www.core.entity.SysRoleEntity">
+
+		select
+			r.id,
+			r.code
+		 from  support_shop.hdys_role r
+		 left join support_shop.hdys_user_role ur ON ur.rid = r.id
+		  where r.status = '0'
+		 and ur.uid = #{userId}
+
+	</select>
+	
+	
+	
+	<insert id="addLoginLog" parameterType="map">
+		INSERT INTO support_shop.hdys_login_log(id,user_id,ip,time,system_type,type,user_name,mark) values(
+        <trim suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+			<if test="user_id != null">#{user_id},</if>
+			<if test="ip != null">#{ip},</if>
+			SYSDATE(),
+			<if test="system_type != null">#{system_type},</if>
+			<if test="type != null">#{type},</if>
+			<if test="user_name != null">#{user_name},</if>
+			<if test="mark != null">#{mark},</if>
+        </trim>)
+	</insert>
+
+
+</mapper> 

@@ -1,0 +1,60 @@
+#注册中心
+eureka:
+  instance:
+    prefer-ip-address: true #将IP注册到Eureka Server上 http://127.0.0.1:8088/
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8060/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+#端口
+server:
+  port: 8088
+spring:
+  application:
+      name: api-gateway
+  main:
+    allow-bean-definition-overriding: true #后发现的bean会覆盖之前相同名称的bean
+  cloud:
+    config:
+      fail-fast: true
+      name: api-druid-hdys
+      discovery:
+        enabled: true
+        service-id: config-server
+    gateway:
+       discovery:
+         locator:
+           lowerCaseServiceId: true  # eureka服务名为大写  配置之后访问时无需大写
+           enabled: false  # 是否与服务发现组件进行结合，通过serviceId转发到具体的服务实例。默认为false，为true代表开启基于服务发现的路由规则，为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务。
+                           # 如果此参数为true,并且下面用了path匹配，则为每个服务创建了2个router，一个是Path匹配 一个是服务名匹配
+       routes:
+        - id: api-auth #路由id 唯一
+          uri: lb://api-auth # lb代表从注册中心获取服务 转发到此服务上
+          predicates:  # Path Route Predicate Factory 模式
+          - Path=/api-auth/** # 应用匹配路径 满足/api-auth/** 的请求将会匹配并被路由
+          filters:
+          - StripPrefix=1   #去掉第一个前缀api-auth  从二级url路径转发 http://localhost:aa/bbb  将会转发到http://服务名/test 和resTemplte类似
+          - name: Hystrix  #熔断机制
+            args:
+              name : fallbackcmd
+              fallbackUri: forward:/defaultfallback  # 可以为不同的服务走不同的熔断回调
+#          - name: Retry
+#            args:
+#              retries: 3 #重试3次
+#          - name: RequestRateLimiter  # filter名称必须是RequestRateLimiter
+#              args:
+#                key-resolver: '#{@hostAddrKeyResolver}' #使用SpEL按名称引用bean
+#                redis-rate-limiter.replenishRate: 10 #允许用户每秒处理多少个请求
+#                redis-rate-limiter.burstCapacity: 20 #令牌桶的容量，允许在一秒钟内完成的最大请求数
+  redis: # 限流配置
+    host: 127.0.0.1
+    # 端口
+    port: 6379
+hystrix:
+  command:
+      fallbackcmd:
+          execution:
+            isolation:
+              thread:
+                timeoutInMilliseconds: 1*5000  #超时时间，若不设置超时时间则有可能无法触发熔断

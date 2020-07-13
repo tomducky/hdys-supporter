@@ -1,0 +1,19 @@
+#eureka注册中心地址
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://123.57.68.244:8060/eureka/
+    register-with-eureka: true
+#客户端配置中心配置
+spring:
+  application:
+    name: api-log
+  cloud:
+    config:
+      fail-fast: true
+      name: api-druid-hdys
+      discovery:
+        enabled: true
+        service-id: config-server

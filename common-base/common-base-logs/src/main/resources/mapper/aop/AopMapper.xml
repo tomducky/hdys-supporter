@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fencer.jdds.aop.aspect.log.mapper.AopMapper">
+
+	<resultMap type="com.fencer.jdds.aop.aspect.log.domain.Aop" id="aopLog">
+		<result property="id" column="ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="operation" column="OPERATION" />
+		<result property="clazz" column="CLAZZ"/>
+		<result property="methodName" column="METHOD_NAME"/>
+		<result property="params" column="PARAMS" jdbcType="CLOB" 
+			javaType = "java.lang.String" />
+		<result property="operatTime" column="OPERAT_TIME"/>
+		<result property="addviceType" column="ADDVICE_TYPE"/>
+		<result property="logType" column="LOG_TYPE"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="errorMsg" column="ERROR_MSG"/>
+	</resultMap>
+
+	<parameterMap type="com.fencer.jdds.aop.aspect.log.domain.Aop" id="insertAoplog">
+		<parameter property="id"/>
+		<parameter property="userName"/>
+		<parameter property="operation"/>
+		<parameter property="clazz"/>
+		<parameter property="methodName"/>
+		<parameter property="params" jdbcType="CLOB" 
+			javaType = "java.lang.String" />
+		<parameter property="operatTime" />
+		<parameter property="addviceType" />
+		<parameter property="logType" />
+		<parameter property="userId" />
+		<parameter property="errorMsg" />
+	</parameterMap>
+
+	<sql id="queryAopLogList">
+		SELECT
+		    LOGS.ID as "id",
+			LOGS.USER_NAME as "userName",
+			LOGS.OPERATION as "operation",
+			LOGS.CLAZZ as "clazz",
+			LOGS.METHOD_NAME as "methodName",
+			LOGS.PARAMS as "params",
+			TO_CHAR(LOGS.OPERAT_TIME ,'yyyy-MM-dd HH24:MI:SS') "operatTime",
+			LOGS.ADDVICE_TYPE as "addviceType",
+			LOGS.LOG_TYPE as "logType",
+			LOGS.USER_ID as "userId",
+			LOGS.ERROR_MSG as "errorMsg"
+
+         FROM JDDS.T_D_RUN_AOP_LOGS LOGS
+	</sql>
+
+	<select id="getAopLogList" parameterType="java.util.Map" resultMap="aopLog">
+		<include refid="queryAopLogList"></include>
+		WHERE  1=1
+		<if test="userName!=null and userName!='' ">
+			 AND LOGS.USER_NAME LIKE  '%' ||  #{userName} || '%'
+		</if>
+		<if test="operation!=null and operation!='' ">
+			AND LOGS.OPERATION LIKE  '%' ||  #{operation} || '%'
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			<![CDATA[AND LOGS.OPERAT_TIME >= to_date(#{startTime},'yyyy-MM-dd HH24:MI:SS')]]>
+		</if>
+		<if test="endTm !=null and endTm !=''">
+			<![CDATA[AND LOGS.OPERAT_TIME <= to_date(#{endTm},'yyyy-MM-dd HH24:MI:SS')]]>
+		</if>
+        ORDER BY  LOGS.OPERAT_TIME DESC
+	</select>
+
+	<insert id="addAopLog"
+			parameterMap="insertAoplog">
+		INSERT INTO JDDS.T_D_RUN_AOP_LOGS(
+		<trim suffixOverrides=",">
+			<if test="id!=null and id!='' ">ID,</if>
+			<if test="userName!=null and userName!='' ">USER_NAME,</if>
+			<if test="operation!=null and operation!='' ">OPERATION,</if>
+			<if test="clazz!=null and clazz!='' ">CLAZZ,</if>
+			<if test="methodName!=null and methodName!='' ">METHOD_NAME,</if>
+			<if test="params!=null and params!='' ">PARAMS,</if>
+			<if test="operatTime!=null and operatTime!='' ">OPERAT_TIME,</if>
+			<if test="addviceType!=null and addviceType">ADDVICE_TYPE,</if>
+			<if test="logType!=null and logType!='' ">LOG_TYPE,</if>
+			<if test="userId!=null and userId!='' ">USER_ID,</if>
+			<if test="errorMsg!=null and errorMsg!='' ">ERROR_MSG,</if>
+		</trim>
+		)
+		VALUES
+		(
+		<trim suffixOverrides=",">
+			<if test="id!=null and id!='' ">#{id},</if>
+			<if test="userName!=null and userName!='' ">#{userName},</if>
+			<if test="operation!=null and operation!='' ">#{operation},</if>
+			<if test="clazz!=null and clazz!='' ">#{clazz},</if>
+			<if test="methodName!=null and methodName!='' ">#{methodName},</if>
+			<if test="params!=null and params!='' ">#{params},</if>
+			<if test="operatTime!=null and operatTime!='' ">to_date(#{operatTime},'yyyy-MM-dd HH24:mi:ss'),</if>
+			<if test="addviceType!=null and addviceType!='' ">#{addviceType},</if>
+			<if test="logType!=null and logType!='' ">#{logType},</if>
+			<if test="userId!=null and userId!='' ">#{userId},</if>
+			<if test="errorMsg!=null and errorMsg!='' ">#{errorMsg},</if>
+		</trim>
+		)
+	</insert>
+
+</mapper>

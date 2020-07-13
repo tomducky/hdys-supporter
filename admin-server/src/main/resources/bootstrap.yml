@@ -1,0 +1,25 @@
+#eureka注册中心地址
+eureka:
+  instance:
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8060/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+#客户端配置中心配置
+spring:
+  application:
+    name: api-server-admin
+  cloud:
+    config:
+      fail-fast: true
+      name: api-server-admin
+      discovery:
+        enabled: true
+        service-id: config-server
