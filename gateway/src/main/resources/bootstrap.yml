@@ -17,11 +17,13 @@ spring:
     allow-bean-definition-overriding: true #后发现的bean会覆盖之前相同名称的bean
   cloud:
     config:
-      fail-fast: true
-      name: api-druid-hdys
+      fail-fast: true #是否启动快速失败功能，功能开启则优先判断config server是否正常
+      name: api-druid-hdys  #配置中心Git仓库config文件夹里的文件名字
+      label: master         #默认分支master
+      profile: dev          #不加此属性直接获取api-druid-hdys.yml，加了后符合config的名字规则api-druid-hdys-dev.yml
       discovery:
         enabled: true
-        service-id: config-server
+        service-id: config-server  #spring cloud 配置中心服务名
     gateway:
        discovery:
          locator:

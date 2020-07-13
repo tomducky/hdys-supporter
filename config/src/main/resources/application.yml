@@ -8,15 +8,30 @@ eureka:
     register-with-eureka: true
 
 server:
-  port: 8889
-    
+  port: 8888
+
+#本地仓库
+#spring:
+#  application:
+#    name: config-server
+#  profiles:
+#    active: native  #本地配置必须有的
+#  cloud:
+#    config:
+#      server:
+#        native:
+#          searchLocations: classpath:/config #本地配置的路径 读取/resources/config下的配置 默认读取文件夹叫config下的资源 客户端调用的配置文件的名字config.name即为config下的文件名的前缀
+
+#远程仓库
 spring:
   application:
-    name: config-server
-  profiles:
-    active: native  #本地配置必须有的
+    name: config-server  # 应用服务名称
   cloud:
     config:
       server:
-        native:
-          searchLocations: classpath:/config #本地配置的路径 读取/resources/config下的配置 默认读取文件夹叫config下的资源 客户端调用的配置文件的名字config.name即为config下的文件名的前缀
+        git:
+          uri: https://github.com/tomducky/hdys-config-respo #git仓库地址
+          username: tomducky #公共仓库可以不需要用户名、密码
+          password: wo982694307
+          default-label: master #配置文件分支、默认master
+          search-paths: config  #配置文件所在根目录 https://github.com/tomducky/hdys-config-respo/config/xxxxx.yml

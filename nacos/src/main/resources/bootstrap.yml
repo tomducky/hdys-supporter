@@ -1,0 +1,12 @@
+server:
+  port: 8881
+spring:
+  application:
+    name: nacos-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #注册的nacos服务端地址
+        namespace: hdysdev          #注册的nacos命名空间 不同的命名空间逻辑上是隔离的，不特殊设置的情况下，服务不会跨命名空间请求，命名空间主要的作用是区分服务使用的范围，比如开发、测试、生产、灰度可以分别设置四个命名空间来互相隔离
+
+

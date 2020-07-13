@@ -8,13 +8,15 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 #客户端配置中心配置
-#spring:
-#  application:
-#    name: api-system
-#  cloud:
-#    config:
-#      fail-fast: true
-#      name: api-druid-hdys
-#      discovery:
-#        enabled: true
-#        service-id: config-server
+spring:
+  application:
+    name: api-system
+  cloud:
+    config:
+      fail-fast: true #是否启动快速失败功能，功能开启则优先判断config server是否正常
+      name: api-druid-hdys  #配置中心Git仓库config文件夹里的文件名字
+      label: master         #默认分支master
+      profile: dev          #不加此属性直接获取api-druid-hdys.yml，加了后符合config的名字规则api-druid-hdys-dev.yml
+      discovery:
+        enabled: true
+        service-id: config-server  #spring cloud 配置中心服务名

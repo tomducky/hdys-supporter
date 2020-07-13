@@ -2,8 +2,10 @@ package com.carry.www.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * 类描述：
@@ -14,7 +16,8 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * 修订历史： 日期			修订者		修订描述
  */
 @EnableConfigServer
-@SpringCloudApplication
+@EnableEurekaClient
+@SpringBootApplication
 public class ConfigApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(ConfigApplication.class, args);
