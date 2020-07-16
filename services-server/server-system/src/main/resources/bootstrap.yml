@@ -8,9 +8,9 @@
 #    register-with-eureka: true
 #    fetch-registry: true
 #客户端配置中心配置
-spring:
-  application:
-    name: api-system
+#spring:
+#  application:
+#    name: api-system
 #  cloud:
 #    config:
 #      fail-fast: true #是否启动快速失败功能，功能开启则优先判断config server是否正常
@@ -21,10 +21,20 @@ spring:
 #        enabled: true
 #        service-id: config-server  #spring cloud 配置中心服务名
 #nacos注册中心配置
+spring:
+  application:
+    name:  api-system
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+        file-extension: yaml #nacos config扩展名 目前仅支持ymal和properties
+        prefix: api-hdys-durid-sys
+  profiles:
+    active: dev   #和Nacos中的dataId 格式对应 ${prefix}-${spring.profile.active}.${file-extension}
   autoconfigure:
     exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration #排除eureka注册中心

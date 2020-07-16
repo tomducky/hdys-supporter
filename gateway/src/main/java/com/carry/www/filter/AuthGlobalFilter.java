@@ -1,5 +1,6 @@
 package com.carry.www.filter;
 
+import com.carry.www.utils.constant.Constants;
 import com.carry.www.utils.spring.SpringUtils;
 import com.carry.www.utils.jwt.JwtTokenUtil;
 import com.carry.www.utils.redis.RedisUtils;
@@ -22,14 +23,14 @@ import java.util.List;
 
 /**
  * 类描述：
- * 全局路由过滤器 进行鉴权判断token,无token获取过期则不予许访问其他服务
+ * 全局权限路由过滤器 进行鉴权判断token,无token获取过期则不予许访问其他服务
  * @author ：carry
  * @version: 1.0  CreatedDate in  2020年04月30日
  * <p>
  * 修订历史： 日期			修订者		修订描述
  */
 @Component
-public class SelfGlobalFilter implements GlobalFilter, Ordered {
+public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     // url匹配器
     private AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -40,6 +41,12 @@ public class SelfGlobalFilter implements GlobalFilter, Ordered {
         return -500;
     }
 
+    /**
+     * @方法描述:  全局权限认证过滤器
+     * @Param: [exchange, chain]
+     * @return: reactor.core.publisher.Mono<java.lang.Void>
+     * @Author: carry
+     */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
@@ -49,6 +56,11 @@ public class SelfGlobalFilter implements GlobalFilter, Ordered {
 
         // 不过滤登录认证服务
         if (pathMatcher.match("/api-auth/**", exchange.getRequest().getPath().value())) {
+            return chain.filter(exchange);
+        }
+
+        // 不过滤登录认证服务
+        if (pathMatcher.match("/api-secutiry/**", exchange.getRequest().getPath().value())) {
             return chain.filter(exchange);
         }
 
@@ -107,7 +119,7 @@ public class SelfGlobalFilter implements GlobalFilter, Ordered {
    * @Author: carry
    */
     protected String getHeaderToken(ServerHttpRequest request) {
-        List<String> strings = request.getHeaders().get("Authorization");
+        List<String> strings = request.getHeaders().get(Constants.TOKEN_HEADER);
         String authToken = null;
         if (strings != null) {
             authToken = strings.get(0).substring("Bearer".length()).trim();

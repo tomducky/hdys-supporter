@@ -16,11 +16,13 @@
         <module>server-test</module>
     </modules>
     <dependencies>
+
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>0.9.0.RELEASE</version>
+            <groupId>com.carry.www</groupId>
+            <artifactId>common-base-utils</artifactId>
+            <version>${com.carry.www.version}</version>
         </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

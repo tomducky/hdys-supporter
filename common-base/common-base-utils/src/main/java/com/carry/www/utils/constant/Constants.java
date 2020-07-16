@@ -65,4 +65,7 @@ public class Constants
      * 不需要认证的接口
      */
     public static final String antMatchers = "/index,/login/**,/favicon.ico,/actuator/**";
+
+    // gatway 日志
+    public static final String CACHE_REQUEST_BODY_OBJECT_KEY = "cachedRequestBodyObject";
 }

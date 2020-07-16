@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 类描述：
@@ -23,6 +24,7 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @MapperScan(basePackages = { "com.carry.www.system.mapper" })
+@ComponentScan(basePackages = "com.carry.*")//注解base-util依赖类
 public class SystemApplcation implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(SystemApplcation.class, args);

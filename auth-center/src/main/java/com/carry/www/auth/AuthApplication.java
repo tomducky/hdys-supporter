@@ -1,10 +1,17 @@
 package com.carry.www.auth;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -15,7 +22,11 @@ import org.springframework.web.client.RestTemplate;
  * <p>
  * 修订历史： 日期			修订者		修订描述
  */
-@SpringCloudApplication
+@SpringBootApplication
+@EnableHystrix
+@EnableDiscoveryClient
+@EnableConfigurationProperties
+@ComponentScan(basePackages = "com.carry.www.*")//扫描util等基础类
 public class AuthApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

@@ -17,3 +17,11 @@
       "Hoxton.SR1": "Spring Boot >=2.2.0.M4 and <2.2.3.BUILD-SNAPSHOT",
       "Hoxton.BUILD-SNAPSHOT": "Spring Boot >=2.2.3.BUILD-SNAPSHOT"
     }
+
+Spring Cloud Version	      Spring Cloud Alibaba Version	   Spring Boot Version
+
+Spring Cloud Edgware            1.5.1.RELEASE                      1.5.X.RELEASE
+Spring Cloud Finchley           2.0.2.RELEASE                      2.0.X.RELEASE
+Spring Cloud Greenwich          2.1.2.RELEASE                      2.1.X.RELEASE
+Spring Cloud Hoxton.RELEASE     2.2.0.RELEASE                      2.2.X.RELEASE
+Spring Cloud Hoxton.SR3         2.2.1.RELEASE                      2.2.5.RELEASE

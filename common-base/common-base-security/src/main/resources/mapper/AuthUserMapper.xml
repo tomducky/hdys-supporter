@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fencer.jdds.core.mapper.AuthMapper">
+<mapper namespace="com.carry.www.core.mapper.AuthMapper">
 
 
 	<select id="selectUserByName" parameterType="map" resultType="com.carry.www.security.entity.SelfUserDetails">
