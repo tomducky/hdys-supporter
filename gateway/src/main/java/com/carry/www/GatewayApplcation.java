@@ -1,5 +1,6 @@
 package com.carry.www;
 
+import com.carry.www.log.mapper.AopMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,12 +22,12 @@ import org.springframework.web.client.RestTemplate;
  * <p>
  * 修订历史： 日期			修订者		修订描述
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableDiscoveryClient
 @EnableHystrix
 @EnableConfigurationProperties
 @ComponentScan(basePackages = "com.carry.www.*")//扫描util等基础类
-@MapperScan(basePackages = { "com.carry.www.log.mapper" })
+@MapperScan(basePackages = { "com.carry.www.log.mapper.*" })
 public class GatewayApplcation implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplcation.class, args);

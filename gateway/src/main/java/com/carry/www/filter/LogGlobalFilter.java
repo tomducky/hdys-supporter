@@ -58,7 +58,7 @@ public class LogGlobalFilter implements GlobalFilter, Ordered {
     // url匹配器
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
-    @Autowired
+    @Autowired(required = false)
     private AopService aopService;
 
     @Override

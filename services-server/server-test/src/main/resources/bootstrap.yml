@@ -1,11 +1,18 @@
+#nacos注册中心配置
 spring:
   application:
-    name: nacos-test2
+    name:  api-system
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 123.57.68.244:8848
         namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+      config:
+        server-addr: 123.57.68.244:8848
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+        file-extension: yaml #nacos config扩展名 目前仅支持ymal和properties
+        prefix: api-druid-hdys
+  profiles:
+    active: dev   #和Nacos中的dataId 格式对应 ${prefix}-${spring.profile.active}.${file-extension}
   autoconfigure:
     exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration #排除eureka注册中心
-

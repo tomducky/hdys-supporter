@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class AopServiceImpl implements AopService {
 
-    @Autowired
+    @Autowired(required = false)
     public AopMapper aopMapper;
 
     /**

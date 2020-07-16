@@ -1,19 +1,37 @@
-#eureka注册中心地址
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://123.57.68.244:8060/eureka/
-    register-with-eureka: true
-#客户端配置中心配置
+##eureka注册中心地址
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    service-url:
+#      defaultZone: http://123.57.68.244:8060/eureka/
+#    register-with-eureka: true
+##客户端配置中心配置
+#spring:
+#  application:
+#    name: api-auth
+#  cloud:
+#    config:
+#      fail-fast: true
+#      name: api-druid-hdys
+#      discovery:
+#        enabled: true
+#        service-id: config-server
+#nacos注册中心配置
 spring:
   application:
-    name: api-auth
+    name:  api-auth
   cloud:
-    config:
-      fail-fast: true
-      name: api-druid-hdys
+    nacos:
       discovery:
-        enabled: true
-        service-id: config-server
+        server-addr: 123.57.68.244:8848
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+      config:
+        server-addr: 123.57.68.244:8848
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
+        file-extension: yaml #nacos config扩展名 目前仅支持ymal和properties
+        prefix: api-druid-hdys
+  profiles:
+    active: dev   #和Nacos中的dataId 格式对应 ${prefix}-${spring.profile.active}.${file-extension}
+  autoconfigure:
+    exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration #排除eureka注册中心

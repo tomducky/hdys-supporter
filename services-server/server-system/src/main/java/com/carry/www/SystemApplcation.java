@@ -8,8 +8,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * 类描述：
@@ -33,5 +36,22 @@ public class SystemApplcation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("###################### SystemApplcation 服务启动完成！######################");
+    }
+
+
+    @Bean
+    @LoadBalanced
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    /**
+     * @方法描述: ip调用，不要开启负载均衡
+     * @return: org.springframework.web.client.RestTemplate
+     * @Author: carry
+     */
+    @Bean(name = "restTemplateOfIp")
+    RestTemplate restTemplateOfIp() {
+        return new RestTemplate();
     }
 }
