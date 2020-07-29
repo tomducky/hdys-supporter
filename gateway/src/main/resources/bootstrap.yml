@@ -26,28 +26,30 @@
 
 #nacos注册中心配置中心
 spring:
+  application:
+    name:  api-gatway
   cloud:
     nacos:
       discovery:
         server-addr: 123.57.68.244:8848
-        namespace: 1b622f7a-71c3-4b95-8ee7-7fd5125d524f
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
       config:
         server-addr: 123.57.68.244:8848
-        namespace: 1b622f7a-71c3-4b95-8ee7-7fd5125d524f
+        namespace: 6e65de9c-9069-4d05-8c20-2f94602163aa
         file-extension: yaml #nacos config扩展名 目前仅支持ymal和properties
         prefix: api-druid-hdys-gatway
   profiles:
     active: dev   #和Nacos中的dataId 格式对应 ${prefix}-${spring.profile.active}.${file-extension}
   autoconfigure:
     exclude: org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration #排除eureka注册中心
-
 #网关配置，已更改到nacos配置中心
-#    gateway:
-#       discovery:
-#         locator:
-#           lowerCaseServiceId: true  # eureka服务名为大写  配置之后访问时无需大写
-#           enabled: false  # 是否与服务发现组件进行结合，通过serviceId转发到具体的服务实例。默认为false，为true代表开启基于服务发现的路由规则，为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务。
-#                           # 如果此参数为true,并且下面用了path匹配，则为每个服务创建了2个router，一个是Path匹配 一个是服务名匹配
+
+    gateway:
+       discovery:
+         locator:
+           lowerCaseServiceId: true  # eureka服务名为大写  配置之后访问时无需大写
+           enabled: false  # 是否与服务发现组件进行结合，通过serviceId转发到具体的服务实例。默认为false，为true代表开启基于服务发现的路由规则，为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务。
+                           # 如果此参数为true,并且下面用了path匹配，则为每个服务创建了2个router，一个是Path匹配 一个是服务名匹配
 #       routes:
 #       - id: limit_auth
 #         uri: lb://api-auth

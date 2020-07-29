@@ -1,11 +1,24 @@
 package test;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
+import org.springframework.jms.core.JmsMessagingTemplate;
+
+import javax.jms.ConnectionFactory;
+import javax.jms.Queue;
+import javax.jms.Topic;
 
 /**
  * 类描述：
@@ -17,6 +30,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableJms
 public class TestApplcation implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(TestApplcation.class, args);
@@ -24,6 +38,8 @@ public class TestApplcation implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("###################### SystemApplcation 服务启动完成！######################");
+        System.out.println("###################### TEST 服务启动完成！######################");
     }
+
+
 }
