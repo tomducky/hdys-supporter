@@ -41,5 +41,54 @@ public class TestApplcation implements CommandLineRunner {
         System.out.println("###################### TEST 服务启动完成！######################");
     }
 
+    /**
+     * @方法描述: queue服务  可在nacos配置文件配置
+     * @Param: []
+     * @return: javax.jms.Queue
+     * @Author: carry
+     */
+    @Bean
+    public Queue queue() {
+        return new ActiveMQQueue("hdys-queue");
+    }
 
+    /**
+     * @方法描述: topic服务 可在nacos配置文件配置
+     * @Param: []
+     * @return: javax.jms.Topic
+     * @Author: carry
+     */
+    @Bean
+    public Topic topic() {
+        return new ActiveMQTopic("hdys-topic");
+    }
+
+
+    /**
+     * @方法描述:  P2P监听器
+     * @Param: [connectionFactory]
+     * @return: org.springframework.jms.config.JmsListenerContainerFactory<?>
+     * @Author: carry
+     */
+    @Bean("queueListener")
+    public JmsListenerContainerFactory<?> queueJmsListenerContainerFactory(ConnectionFactory connectionFactory){
+        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setPubSubDomain(false);
+        return factory;
+    }
+
+    /**
+     * @方法描述:   PUB/SUP监听器
+     * @Param: [connectionFactory]
+     * @return: org.springframework.jms.config.JmsListenerContainerFactory<?>
+     * @Author: carry
+     */
+    @Bean("topicListener")
+    public JmsListenerContainerFactory<?> topicJmsListenerContainerFactory(ConnectionFactory connectionFactory){
+        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setPubSubDomain(true);
+        return factory;
+    }
 }
