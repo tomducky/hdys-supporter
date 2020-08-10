@@ -1,6 +1,9 @@
 package com.carry.www;
 
+import com.carry.www.goods.MyThread;
+import com.carry.www.lock.RedisLocker;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +14,8 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -25,16 +30,22 @@ import org.springframework.web.client.RestTemplate;
 @EnableHystrix
 @EnableDiscoveryClient
 @EnableConfigurationProperties
-@MapperScan(basePackages = { "com.carry.www.order.mapper" })
+@MapperScan(basePackages = {"com.carry.www.order.mapper"})
 @ComponentScan(basePackages = "com.carry.*")//注解base-util依赖类
+@EnableScheduling
+@EnableAsync
 public class GoodsApplcation implements CommandLineRunner {
+    @Autowired
+    RedisLocker distributedLocker;
+
     public static void main(String[] args) {
         SpringApplication.run(GoodsApplcation.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("###################### SystemApplcation 服务启动完成！######################");
+        System.out.println("###################### GoodsApplcation 服务启动完成！######################");
+
     }
 
 

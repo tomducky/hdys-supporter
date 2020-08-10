@@ -34,7 +34,7 @@ public class AdvertApplcation implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("###################### SystemApplcation 服务启动完成！######################");
+        System.out.println("###################### AdvertApplcation 服务启动完成！######################");
     }
 
 
