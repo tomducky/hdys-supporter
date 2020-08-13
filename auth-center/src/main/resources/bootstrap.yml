@@ -3,7 +3,7 @@
 #  instance:
 #    prefer-ip-address: true
 #  client:
-#    service-url:
+#    api-url:
 #      defaultZone: http://123.57.68.244:8060/eureka/
 #    register-with-eureka: true
 ##客户端配置中心配置
@@ -16,7 +16,7 @@
 #      name: api-druid-hdys
 #      discovery:
 #        enabled: true
-#        service-id: config-server
+#        api-id: config-server
 #nacos注册中心配置
 spring:
   application:

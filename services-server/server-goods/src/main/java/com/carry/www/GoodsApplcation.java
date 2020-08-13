@@ -1,8 +1,8 @@
 package com.carry.www;
 
-import com.carry.www.goods.MyThread;
-import com.carry.www.lock.RedisLocker;
+import com.carry.www.lock.api.RedisLocker;
 import org.mybatis.spring.annotation.MapperScan;
+import org.redisson.Redisson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +14,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
@@ -35,8 +36,9 @@ import org.springframework.web.client.RestTemplate;
 @EnableScheduling
 @EnableAsync
 public class GoodsApplcation implements CommandLineRunner {
+
     @Autowired
-    RedisLocker distributedLocker;
+    private StringRedisTemplate redisTemplate;
 
     public static void main(String[] args) {
         SpringApplication.run(GoodsApplcation.class, args);
@@ -44,10 +46,28 @@ public class GoodsApplcation implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        redisTemplate.opsForValue().set("test-lock", "10");
+
+
         System.out.println("###################### GoodsApplcation 服务启动完成！######################");
 
     }
 
+    @Bean
+    public Redisson RedissonConnect() {
+        //Config config=new Config();
+        //config.useSingleServer().setAddress("redis://127.0.0.1:6379").setDatabase(0);
+
+        return (Redisson) Redisson.create();
+    }
+
+    @Bean
+    public RedisLocker redisLocker() {
+        //Config config=new Config();
+        //config.useSingleServer().setAddress("redis://127.0.0.1:6379").setDatabase(0);
+        Redisson redisson = (Redisson) Redisson.create();
+        return new RedisLocker(redisson);
+    }
 
     @Bean
     @LoadBalanced
@@ -64,4 +84,5 @@ public class GoodsApplcation implements CommandLineRunner {
     RestTemplate restTemplateOfIp() {
         return new RestTemplate();
     }
+
 }

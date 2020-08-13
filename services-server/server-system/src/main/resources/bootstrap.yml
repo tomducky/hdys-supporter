@@ -3,7 +3,7 @@
 #  instance:
 #    prefer-ip-address: true
 #  client:
-#    service-url:
+#    api-url:
 #      defaultZone: http://123.57.68.244:8060/eureka/
 #    register-with-eureka: true
 #    fetch-registry: true
@@ -19,7 +19,7 @@
 #      profile: dev          #不加此属性直接获取api-druid-hdys.yml，加了后符合config的名字规则api-druid-hdys-dev.yml
 #      discovery:
 #        enabled: true
-#        service-id: config-server  #spring cloud 配置中心服务名
+#        api-id: config-server  #spring cloud 配置中心服务名
 #nacos注册中心配置
 spring:
   application:

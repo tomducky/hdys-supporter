@@ -1,8 +1,8 @@
-package com.carry.www.lock;
+package com.carry.www.lock.exception;
 
 /**
  * 类描述：
- *
+ *   获取锁异常类
  * @author ：carry
  * @version: 1.0  CreatedDate in  2019年07月25日
  * <p>
