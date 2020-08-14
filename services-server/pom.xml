@@ -19,8 +19,22 @@
         <module>server-pay</module>
         <module>server-search</module>
         <module>server-advert</module>
+        <module>server-account</module>
     </modules>
     <dependencies>
+        <!--seate-->
+        <dependency>
+            <groupId>com.carry.www</groupId>
+            <artifactId>common-seate-service</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!--Fegin-->
+        <dependency>
+            <groupId>com.carry.www</groupId>
+            <artifactId>common-openfeign-service</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+         <!--分布式锁-->
         <dependency>
             <groupId>com.carry.www</groupId>
             <artifactId>common-redis-distributed-lock</artifactId>

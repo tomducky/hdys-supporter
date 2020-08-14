@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>server-order</artifactId>
+    <artifactId>server-account</artifactId>
 
     <build>
         <plugins>
@@ -18,7 +18,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>com.carry.www.config.ConfigApplication</mainClass>
+                    <mainClass>com.carry.www.AccountApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -40,12 +40,4 @@
         </plugins>
         <finalName>${artifactId}</finalName>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-all</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 </project>

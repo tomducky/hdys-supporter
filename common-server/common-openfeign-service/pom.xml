@@ -3,19 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>supports</artifactId>
+        <artifactId>common-server</artifactId>
         <groupId>com.carry.www</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-server</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>common-redis-distributed-lock</module>
-        <module>common-openfeign-service</module>
-        <module>common-seate-service</module>
-    </modules>
+    <artifactId>common-openfeign-service</artifactId>
 
 
 </project>

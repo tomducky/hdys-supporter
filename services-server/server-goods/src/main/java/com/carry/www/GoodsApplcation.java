@@ -1,6 +1,7 @@
 package com.carry.www;
 
 import com.carry.www.lock.api.RedisLocker;
+import com.carry.www.seata.config.DataSourceProxyAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.redisson.Redisson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -33,8 +35,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties
 @MapperScan(basePackages = {"com.carry.www.order.mapper"})
 @ComponentScan(basePackages = "com.carry.*")//注解base-util依赖类
-@EnableScheduling
-@EnableAsync
+@Import(DataSourceProxyAutoConfiguration.class)
 public class GoodsApplcation implements CommandLineRunner {
 
     @Autowired
