@@ -1,9 +1,12 @@
 package com.carry.www;
 
+import com.carry.www.dynamic.route.config.DynamicRoutingConfigForApp;
 import com.carry.www.log.mapper.AopMapper;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -29,6 +32,8 @@ import org.springframework.web.client.RestTemplate;
 @ComponentScan(basePackages = "com.carry.www.*")//扫描util等基础类
 @MapperScan(basePackages = { "com.carry.www.log.mapper.*" })
 public class GatewayApplcation implements CommandLineRunner {
+    @Autowired
+    DynamicRoutingConfigForApp dynamicRoutingConfigForApp;
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplcation.class, args);
     }
@@ -36,6 +41,9 @@ public class GatewayApplcation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("###################### gateway 服务启动完成！######################");
+        System.out.println("###################### 自动注册路由 START！######################");
+        dynamicRoutingConfigForApp.refreshRouting();
+        System.out.println("###################### 自动注册路由 END！######################");
     }
 
     @Bean

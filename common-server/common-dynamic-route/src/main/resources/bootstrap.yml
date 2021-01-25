@@ -1,0 +1,10 @@
+nacos:
+  server-addr: 127.0.0.1:8848
+  namespace: dev
+#动态路由相关配置
+dynamic:
+  route:
+    data-id: routes-${spring.application.name}.yaml
+    group: ROUTE_GROUP
+    server-addr: 127.0.0.1:8848
+    namespace: dev

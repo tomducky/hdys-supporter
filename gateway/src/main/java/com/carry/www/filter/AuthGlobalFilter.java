@@ -50,48 +50,48 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
-        String accessToken = this.getHeaderToken(exchange.getRequest());
-
-        RedisUtils redisUtils = SpringUtils.getBean(RedisUtils.class);
-
-        // 不过滤登录认证服务
-        if (pathMatcher.match("/api-auth/**", exchange.getRequest().getPath().value())) {
-            return chain.filter(exchange);
-        }
-
-        // 不过滤登录认证服务
-        if (pathMatcher.match("/api-secutiry/**", exchange.getRequest().getPath().value())) {
-            return chain.filter(exchange);
-        }
-
-        // 其他服务判断token，进行拦截
-        if (accessToken == null) {
-            // 没有token ，则 报错 401，身份不合法。
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return responseJson(exchange.getResponse());
-        } else {
-            try {
-                //redis中获取token
-                String token = (String) redisUtils.get(accessToken);
-
-                if (StringUtils.isBlank(token)) {
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return responseJson(exchange.getResponse());
-                }
-
-                JwtTokenUtil jwtTokenUtil = SpringUtils.getBean(JwtTokenUtil.class);
-                // 判断token是否过期
-                Boolean flag = jwtTokenUtil.isExpiration(token);
-                if (flag) {
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return responseJson(exchange.getResponse());
-                }
-
-            } catch (Exception e) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return responseJson(exchange.getResponse());
-            }
-        }
+//        String accessToken = this.getHeaderToken(exchange.getRequest());
+//
+//        RedisUtils redisUtils = SpringUtils.getBean(RedisUtils.class);
+//
+//        // 不过滤登录认证服务
+//        if (pathMatcher.match("/api-auth/**", exchange.getRequest().getPath().value())) {
+//            return chain.filter(exchange);
+//        }
+//
+//        // 不过滤登录认证服务
+//        if (pathMatcher.match("/api-secutiry/**", exchange.getRequest().getPath().value())) {
+//            return chain.filter(exchange);
+//        }
+//
+//        // 其他服务判断token，进行拦截
+//        if (accessToken == null) {
+//            // 没有token ，则 报错 401，身份不合法。
+//            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//            return responseJson(exchange.getResponse());
+//        } else {
+//            try {
+//                //redis中获取token
+//                String token = (String) redisUtils.get(accessToken);
+//
+//                if (StringUtils.isBlank(token)) {
+//                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//                    return responseJson(exchange.getResponse());
+//                }
+//
+//                JwtTokenUtil jwtTokenUtil = SpringUtils.getBean(JwtTokenUtil.class);
+//                // 判断token是否过期
+//                Boolean flag = jwtTokenUtil.isExpiration(token);
+//                if (flag) {
+//                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//                    return responseJson(exchange.getResponse());
+//                }
+//
+//            } catch (Exception e) {
+//                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//                return responseJson(exchange.getResponse());
+//            }
+//        }
 
         return chain.filter(exchange);
     }

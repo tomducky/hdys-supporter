@@ -11,55 +11,60 @@
 
     <artifactId>gateway</artifactId>
 
-     <dependencies>
-         <!--限流-->
-         <dependency>
-             <groupId>org.springframework.boot</groupId>
-             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>com.github.vladimir-bukhtoyarov</groupId>
-             <artifactId>bucket4j-core</artifactId>
-             <version>4.0.0</version>
-         </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.carry.www</groupId>
+            <artifactId>common-dynamic-route</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!--限流-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.vladimir-bukhtoyarov</groupId>
+            <artifactId>bucket4j-core</artifactId>
+            <version>4.0.0</version>
+        </dependency>
 
-         <dependency>
-             <groupId>com.carry.www</groupId>
-             <artifactId>common-base-utils</artifactId>
-             <version>${com.carry.www.version}</version>
-             <exclusions>
-                 <exclusion>
-                     <groupId>org.springframework.boot</groupId>
-                     <artifactId>spring-boot-starter-web</artifactId>
-                 </exclusion>
-             </exclusions>
-         </dependency>
+        <dependency>
+            <groupId>com.carry.www</groupId>
+            <artifactId>common-base-utils</artifactId>
+            <version>${com.carry.www.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-         <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-         </dependency>
-         <!--gateway 网关 -->
-         <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-gateway</artifactId>
-         </dependency>
-       <!--   健康管理 -->
-         <dependency>
-             <groupId>org.springframework.boot</groupId>
-             <artifactId>spring-boot-starter-actuator</artifactId>
-         </dependency>
-         <!-- jwt-->
-         <dependency>
-             <groupId>io.jsonwebtoken</groupId>
-             <artifactId>jjwt</artifactId>
-             <version>0.9.1</version>
-         </dependency>
-     </dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!--gateway 网关 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <!--   健康管理 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- jwt-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -84,6 +89,14 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warName>${artifactId}</warName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
